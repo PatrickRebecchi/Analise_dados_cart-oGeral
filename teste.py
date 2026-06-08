@@ -6,8 +6,16 @@ app = Flask(__name__)
 def carregar_dados():
     return pd.read_csv("ClientesBanco.csv", encoding="latin1")
 
+@app.route("/todosClientes")
+def todosClientes():
+    df = carregar_dados()
+    lista = df.to_dict(orient="records")
+    colunas = df.columns.tolist()
+    total = len(lista)
+    return render_template("clientes.html", colunas=colunas, lista=lista, total=total)
+
 @app.route("/")
-def clientes():
+def home():
     return redirect(url_for("dashboard"))
 
 @app.route("/categoria_cartao")
@@ -40,6 +48,17 @@ def filtro():
     sexos = sorted(df["Sexo"].dropna().unique().tolist())
     categorias = sorted(df["Categoria Cartão"].dropna().unique().tolist())
     return render_template("filtro.html", sexos=sexos, categorias=categorias)
+
+@app.route("/clientes_por_sexo_categoria")
+def clientes_por_sexo_categoria():
+    df = carregar_dados()
+    sexo = request.args.get("sexo")
+    categoria = request.args.get("categoria")
+    df_filtrado = df[(df["Sexo"] == sexo) & (df["Categoria Cartão"] == categoria)]
+    lista = df_filtrado.to_dict(orient="records")
+    colunas = df_filtrado.columns.tolist()
+    total = len(lista)
+    return render_template("lista_clientes.html", colunas=colunas, lista=lista, total=total, sexo=sexo, categoria=categoria)
 
 @app.route("/dashboard")
 def dashboard():
