@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CartãoGeral - Categoria Cartão</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f0f2f5; }
+    .navbar { background: linear-gradient(90deg, #0d6efd, #ffc107) !important; }
+    .navbar-brand { font-weight: 700; color: #fff !important; }
+    .card { box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    table { font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="/dashboard">CartãoGeral</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="btn btn-light btn-sm m-1" href="/">Todos Clientes</a></li>
+        <li class="nav-item"><a class="btn btn-light btn-sm m-1" href="/categoria_cartao">Categoria Cartão</a></li>
+        <li class="nav-item"><a class="btn btn-light btn-sm m-1" href="/sexo">Por Sexo</a></li>
+        <li class="nav-item"><a class="btn btn-warning btn-sm m-1" href="/filtro">Filtro Avançado</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="card p-3">
+    <h5 class="card-title">Categoria do Cartão</h5>
+    {{ tabela_html | safe }}
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
