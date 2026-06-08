@@ -62,6 +62,7 @@ def dashboard():
                            total=total, sexo=sexo, categoria=categoria,
                            clientes_sexo=df["Sexo"].value_counts().to_dict(),
                            clientes_categoria=df["Categoria Cartão"].value_counts().to_dict(),
+                           clientes_situacao=df["Categoria"].value_counts().to_dict(),
                            cruzado=df.groupby(["Sexo", "Categoria Cartão"]).size().unstack(fill_value=0).to_dict())
 
 if __name__ == "__main__":

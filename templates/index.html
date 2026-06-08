@@ -23,7 +23,8 @@
         <li class="nav-item"><a class="btn btn-light btn-sm m-1" href="/">Todos Clientes</a></li>
         <li class="nav-item"><a class="btn btn-light btn-sm m-1" href="/categoria_cartao">Categoria Cartão</a></li>
         <li class="nav-item"><a class="btn btn-light btn-sm m-1" href="/sexo">Por Sexo</a></li>
-        <li class="nav-item"><a class="btn btn-warning btn-sm m-1" href="/filtro">Filtro Avançado</a></li>
+        <li class="nav-item"><a class="btn btn-warning btn-sm m-1" href="/situacao">Situação</a></li>
+        <li class="nav-item"><a class="btn btn-light btn-sm m-1" href="/filtro">Filtro Avançado</a></li>
       </ul>
     </div>
   </div>
@@ -86,6 +87,17 @@
         </ul>
       </div>
     </div>
+    <div class="col-md-6">
+      <div class="card p-3">
+        <h5 class="card-title">Clientes por Situação</h5>
+        <ul class="list-group">
+          {% for k, v in clientes_situacao.items() %}
+          <li class="list-group-item d-flex justify-content-between"><span>{{ k }}</span><strong>{{ v }}</strong></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    
     <div class="col-12">
       <div class="card p-3">
         <h5 class="card-title">Cruzamento Sexo x Categoria</h5>
