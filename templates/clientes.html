@@ -77,6 +77,51 @@
         </tbody>
       </table>
     </div>
+    <div class="d-flex flex-column align-items-center mt-3">
+      <div class="pagination-info mb-2">
+        <span class="text-muted fw-medium">Página {{ page }} de {{ total_pages }} ({{ total }} clientes)</span>
+      </div>
+      {% if total_pages > 1 %}
+      <ul class="pagination pagination-sm justify-content-center mb-0 gap-1">
+        {% if page > 1 %}
+        <li class="page-item">
+          <a class="page-link px-3" href="/todosClientes?page={{ page - 1 }}" title="Página anterior">
+            <i class="bi bi-chevron-left"></i> Anterior
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link px-3"><i class="bi bi-chevron-left"></i> Anterior</span></li>
+        {% endif %}
+        {% set prev_page = 0 %}
+        {% set ellipsis_shown = False %}
+        {% for p in pagina_lista %}
+          {% if not loop.first %}
+            {% if not ellipsis_shown and p > prev_page + 1 %}
+            <li class="page-item disabled">
+              <span class="page-link border-0 bg-transparent text-muted px-1">...</span>
+            </li>
+            {% set ellipsis_shown = True %}
+            {% endif %}
+          {% endif %}
+          <li class="page-item {% if p == page %}active{% endif %}">
+            <a class="page-link border-0 shadow-sm fw-bold {% if p == page %}bg-primary{% endif %}" 
+               href="/todosClientes?page={{ p }}" 
+               style="min-width: 42px; border-radius: 8px;">{{ p }}</a>
+          </li>
+          {% set prev_page = p %}
+        {% endfor %}
+        {% if page < total_pages %}
+        <li class="page-item">
+          <a class="page-link px-3" href="/todosClientes?page={{ page + 1 }}" title="Próxima página">
+            Próximo <i class="bi bi-chevron-right"></i>
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link px-3">Próximo <i class="bi bi-chevron-right"></i></span></li>
+        {% endif %}
+      </ul>
+      {% endif %}
+    </div>
     <a class="btn btn-outline-secondary btn-sm mt-2" href="/dashboard"><i class="bi bi-arrow-left me-1"></i>Voltar</a>
   </div>
 </div>

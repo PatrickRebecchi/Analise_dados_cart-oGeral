@@ -68,6 +68,27 @@ def todosClientes():
     colunas = df.columns.tolist()
     total = len(lista)
     
+    page = request.args.get("page", default=1, type=int)
+    per_page = 100
+    total_pages = (total + per_page - 1) // per_page
+    
+    start = (page - 1) * per_page
+    end = start + per_page
+    lista_paginada = lista[start:end]
+    
+    pages_to_show = set()
+    
+    for p in range(1, min(5, total_pages + 1)):
+        pages_to_show.add(p)
+    
+    if 5 <= page <= total_pages - 4:
+        pages_to_show.add(page)
+    
+    for p in range(max(1, total_pages - 3), total_pages + 1):
+        pages_to_show.add(p)
+    
+    pagina_lista = sorted(pages_to_show)
+    
     colunas_categoricas = ["Categoria", "Sexo", "Educação", "Estado Civil", 
                            "Faixa Salarial Anual", "Categoria Cartão"]
     colunas_numericas = ["Idade", "Dependentes", "Meses como Cliente", "Produtos Contratados", 
@@ -81,10 +102,12 @@ def todosClientes():
         if col in df.columns:
             opcoes_por_coluna[col] = sorted(df[col].dropna().unique().tolist())
     
-    return render_template("clientes.html", colunas=colunas, lista=lista, total=total,
+    return render_template("clientes.html", colunas=colunas, lista=lista_paginada, total=total,
                           colunas_categoricas=colunas_categoricas,
                           colunas_numericas=colunas_numericas,
-                          opcoes_por_coluna=opcoes_por_coluna)
+                          opcoes_por_coluna=opcoes_por_coluna,
+                          page=page, per_page=per_page, total_pages=total_pages,
+                          pagina_lista=pagina_lista)
 
 @app.route("/")
 def home():
