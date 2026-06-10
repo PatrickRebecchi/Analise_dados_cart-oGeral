@@ -67,7 +67,24 @@ def todosClientes():
     lista = df.to_dict(orient="records")
     colunas = df.columns.tolist()
     total = len(lista)
-    return render_template("clientes.html", colunas=colunas, lista=lista, total=total)
+    
+    colunas_categoricas = ["Categoria", "Sexo", "Educação", "Estado Civil", 
+                           "Faixa Salarial Anual", "Categoria Cartão"]
+    colunas_numericas = ["Idade", "Dependentes", "Meses como Cliente", "Produtos Contratados", 
+                         "Inatividade 12m", "Contatos 12m", "Limite", "Limite Consumido", 
+                         "Limite Disponível", "Valor Transacoes 12m", "Qtde Transacoes 12m",
+                         "Mudanças Transacoes_Q4_Q1", "Mudança Qtde Transações_Q4_Q1",
+                         "Taxa de Utilização Cartão"]
+    
+    opcoes_por_coluna = {}
+    for col in colunas_categoricas:
+        if col in df.columns:
+            opcoes_por_coluna[col] = sorted(df[col].dropna().unique().tolist())
+    
+    return render_template("clientes.html", colunas=colunas, lista=lista, total=total,
+                          colunas_categoricas=colunas_categoricas,
+                          colunas_numericas=colunas_numericas,
+                          opcoes_por_coluna=opcoes_por_coluna)
 
 @app.route("/")
 def home():
